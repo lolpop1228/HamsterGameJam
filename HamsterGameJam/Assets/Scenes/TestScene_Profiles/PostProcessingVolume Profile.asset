@@ -20,10 +20,10 @@ MonoBehaviour:
     overrideState: 1
     value: 0.3
   threshold:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 1.1
   softKnee:
-    overrideState: 0
+    overrideState: 1
     value: 0.5
   clamp:
     overrideState: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
     value: 0.8
   size:
     overrideState: 1
-    value: 1.5
+    value: 1.3
   lumContrib:
     overrideState: 0
     value: 0.8
@@ -93,7 +93,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 35
+    value: 25
   intensityX:
     overrideState: 0
     value: 1
@@ -101,13 +101,13 @@ MonoBehaviour:
     overrideState: 0
     value: 1
   centerX:
-    overrideState: 0
+    overrideState: 1
     value: 0
   centerY:
-    overrideState: 0
+    overrideState: 1
     value: 0
   scale:
-    overrideState: 0
+    overrideState: 1
     value: 1
 --- !u!114 &-411239496499425776
 MonoBehaviour:
@@ -136,15 +136,15 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.35
+    value: 0.3
   smoothness:
     overrideState: 1
-    value: 0.153
+    value: 0.8
   roundness:
     overrideState: 0
     value: 1
   rounded:
-    overrideState: 0
+    overrideState: 1
     value: 0
   mask:
     overrideState: 0
@@ -172,6 +172,33 @@ MonoBehaviour:
   - {fileID: -411239496499425776}
   - {fileID: 8721380807607961160}
   - {fileID: -9012566696647774862}
+  - {fileID: 5074652376661072389}
+--- !u!114 &5074652376661072389
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
+  m_Name: ChromaticAberration
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  spectralLut:
+    overrideState: 0
+    value: {fileID: 0}
+    defaultState: 1
+  intensity:
+    overrideState: 1
+    value: 0.3
+  fastMode:
+    overrideState: 0
+    value: 0
 --- !u!114 &5090342536894497929
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -225,7 +252,7 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 0
-    value: 0
+    value: -10
   tint:
     overrideState: 0
     value: 0
@@ -236,17 +263,17 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   saturation:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -20
   brightness:
     overrideState: 0
     value: 0
   postExposure:
     overrideState: 1
-    value: 0
+    value: -1
   contrast:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -15
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
