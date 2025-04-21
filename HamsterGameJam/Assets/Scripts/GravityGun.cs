@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GravityGun : MonoBehaviour
 {
@@ -7,17 +8,29 @@ public class GravityGun : MonoBehaviour
     public float throwForce = 500f;
     public Transform holdPoint;
     public LayerMask grabbableLayer;
-    
+    public GameObject grabPrompt; // UI reference
+
     private Rigidbody grabbedObject;
     private bool isHolding = false;
-    private float holdDistance = 3f; // Default distance
-    private float minDistance = 1f;  // Minimum hold distance
-    private float maxDistance = 10f; // Maximum hold distance
-    private float scrollSpeed = 2f;  // Speed of scrolling movement
+    private float holdDistance = 3f;
+    private float minDistance = 1f;
+    private float maxDistance = 10f;
+    private float scrollSpeed = 2f;
+    private bool lookingAtGrabbable = false;
+
+    void Start()
+    {
+        if (grabPrompt != null)
+        {
+            grabPrompt.SetActive(false);
+        }
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F)) // Left-click to grab/drop
+        CheckForGrabbable();
+
+        if (Input.GetKeyDown(KeyCode.F))
         {
             if (isHolding) DropObject();
             else TryGrabObject();
@@ -25,12 +38,39 @@ public class GravityGun : MonoBehaviour
 
         if (isHolding && grabbedObject != null)
         {
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            holdDistance += scroll * scrollSpeed;
+            holdDistance = Mathf.Clamp(holdDistance, minDistance, maxDistance);
+
             MoveObject();
         }
 
-        if (Input.GetMouseButtonDown(1) && isHolding) // Right-click to throw
+        if (Input.GetMouseButtonDown(1) && isHolding)
         {
             ThrowObject();
+        }
+    }
+
+    void CheckForGrabbable()
+    {
+        RaycastHit hit;
+        if (!isHolding && Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, grabRange, grabbableLayer))
+        {
+            // Show prompt
+            if (!lookingAtGrabbable)
+            {
+                grabPrompt.gameObject.SetActive(true);
+                lookingAtGrabbable = true;
+            }
+        }
+        else
+        {
+            // Hide prompt
+            if (lookingAtGrabbable)
+            {
+                grabPrompt.gameObject.SetActive(false);
+                lookingAtGrabbable = false;
+            }
         }
     }
 
@@ -44,9 +84,10 @@ public class GravityGun : MonoBehaviour
             {
                 grabbedObject = rb;
                 grabbedObject.useGravity = false;
-                grabbedObject.drag = 10f; // Increase drag for smooth movement
+                grabbedObject.drag = 10f;
                 isHolding = true;
-                holdDistance = Vector3.Distance(playerCamera.transform.position, grabbedObject.position); // Set hold distance
+                holdDistance = Vector3.Distance(playerCamera.transform.position, grabbedObject.position);
+                grabPrompt.gameObject.SetActive(false); // Hide when grabbing
             }
         }
     }
@@ -54,10 +95,10 @@ public class GravityGun : MonoBehaviour
     void MoveObject()
     {
         if (grabbedObject == null) return;
-        
+
         Vector3 targetPosition = playerCamera.transform.position + playerCamera.transform.forward * holdDistance;
         Vector3 direction = targetPosition - grabbedObject.position;
-        grabbedObject.velocity = direction * 10f; // Smooth movement
+        grabbedObject.velocity = direction * 10f;
     }
 
     void DropObject()
