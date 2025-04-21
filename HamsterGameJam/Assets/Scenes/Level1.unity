@@ -29935,7 +29935,7 @@ MonoBehaviour:
   jumpSound: {fileID: 8300000, guid: eec36f85173114f4f8ee80ea6ff765b2, type: 3}
   maxStamina: 100
   currentStamina: 0
-  staminaDrainRate: 30
+  staminaDrainRate: 35
   staminaRegenRate: 10
   staminaRegenDelay: 2
   staminaText: {fileID: 979840069}
