@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: AnonymousPro-Regular SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: -1080076360
   material: {fileID: 4483132255945286166}
-  materialHashCode: 0
+  materialHashCode: -2140409192
   m_Version: 1.1.0
   m_SourceFontFileGUID: 40dabfda4f736614f9fb238fde34e8c4
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 40dabfda4f736614f9fb238fde34e8c4, type: 3}
@@ -2786,9 +2786,9 @@ Material:
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 1
-    - _ScaleRatioB: 1
-    - _ScaleRatioC: 1
+    - _ScaleRatioA: 0.8333333
+    - _ScaleRatioB: 0.6770833
+    - _ScaleRatioC: 0.6770833
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
