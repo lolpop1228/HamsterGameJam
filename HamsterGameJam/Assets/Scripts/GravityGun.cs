@@ -28,6 +28,12 @@ public class GravityGun : MonoBehaviour
 
     void Update()
     {
+        // Check if the grabbed object was destroyed
+        if (isHolding && grabbedObject == null)
+        {
+            isHolding = false;
+        }
+
         CheckForGrabbable();
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -50,7 +56,7 @@ public class GravityGun : MonoBehaviour
             ThrowObject();
         }
     }
-
+    
     void CheckForGrabbable()
     {
         RaycastHit hit;

@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     public Camera playerCamera;
     public float walkSpeed = 6f;
     public float runSpeed = 12f;
-    public float jumpPower = 7f;
     public float gravity = 10f;
     public float lookSpeed = 2f;
     public float lookXLimit = 90f;
@@ -31,10 +30,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Footstep Audio")]
     public AudioSource footstepAudioSource;
     public AudioClip footstepClip;
-
-    [Header("Jump Sound")]
-    public AudioSource jumpAudioSource;
-    public AudioClip jumpSound;
 
     [Header("Stamina System")]
     public float maxStamina = 100f;
@@ -93,20 +88,8 @@ public class PlayerMovement : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        // Jump
-        if (Input.GetButtonDown("Jump") && canMove && characterController.isGrounded)
-        {
-            moveDirection.y = jumpPower;
-
-            if (jumpAudioSource != null && jumpSound != null)
-            {
-                jumpAudioSource.PlayOneShot(jumpSound);
-            }
-        }
-        else
-        {
-            moveDirection.y = movementDirectionY;
-        }
+        // Preserve vertical velocity (falling)
+        moveDirection.y = movementDirectionY;
 
         // Apply gravity
         if (!characterController.isGrounded)
