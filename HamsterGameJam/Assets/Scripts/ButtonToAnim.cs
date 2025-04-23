@@ -8,6 +8,14 @@ public class ButtonToAnim : MonoBehaviour
     public Animator animator;
     public Animator buttonAnimator;
     public string animToPlay;
+    private AudioSource audioSource;
+    public AudioClip openSound;
+
+     void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
 
     void OnCollisionEnter(Collision collision)
     {
@@ -17,9 +25,10 @@ public class ButtonToAnim : MonoBehaviour
             {
                 buttonAnimator.Play("Press");
             }
-            if (animator != null)
+            if (animator != null && openSound != null)
             {
                 animator.Play(animToPlay);
+                audioSource.PlayOneShot(openSound);
             }
         }
     }
@@ -28,10 +37,11 @@ public class ButtonToAnim : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Box"))
         {
-            if (animator != null && buttonAnimator != null)
+            if (animator != null && buttonAnimator != null && openSound != null)
             {
                 buttonAnimator.Play("Release");
                 animator.Play("Close");
+                audioSource.PlayOneShot(openSound);
             }
         }
     }

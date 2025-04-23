@@ -5,6 +5,8 @@ using UnityEngine;
 public class OpenPage : MonoBehaviour, IInteractable
 {
     public GameObject lorePage;
+    private AudioSource audioSource;
+    public AudioClip flipSound;
 
     void Start()
     {
@@ -12,6 +14,8 @@ public class OpenPage : MonoBehaviour, IInteractable
         {
             lorePage.SetActive(false);
         }
+        
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Interact()
@@ -19,6 +23,11 @@ public class OpenPage : MonoBehaviour, IInteractable
         if (lorePage != null)
         {
             lorePage.SetActive(true);
+        }
+
+        if (flipSound != null)
+        {
+            audioSource.PlayOneShot(flipSound);
         }
     }
 
@@ -29,6 +38,11 @@ public class OpenPage : MonoBehaviour, IInteractable
             if (lorePage != null)
             {
                 lorePage.SetActive(false);
+            }
+
+            if (flipSound != null)
+            {
+                audioSource.PlayOneShot(flipSound);
             }
         }
     }
