@@ -7,6 +7,7 @@ public class PickUpFlashLight : MonoBehaviour, IInteractable
     public GameObject flashLightObj;
     public GameObject playerFlashlight;
     public GameObject flashLightUI;
+    public GameObject flashLightUI2;
 
     void Start()
     {
@@ -14,6 +15,7 @@ public class PickUpFlashLight : MonoBehaviour, IInteractable
         {
             playerFlashlight.SetActive(false);
             flashLightUI.SetActive(false);
+            flashLightUI2.SetActive(false);
         }
     }
 
@@ -25,5 +27,13 @@ public class PickUpFlashLight : MonoBehaviour, IInteractable
             playerFlashlight.SetActive(true);
             flashLightUI.SetActive(true);
         }
+        StartCoroutine(TutorialUI());
+    }
+
+    IEnumerator TutorialUI()
+    {
+        flashLightUI2.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        flashLightUI2.SetActive(false);
     }
 }
