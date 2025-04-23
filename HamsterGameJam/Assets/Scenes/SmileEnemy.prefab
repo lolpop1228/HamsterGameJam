@@ -397,7 +397,7 @@ MonoBehaviour:
   stoppingDistance: 1.5
   attackCooldown: 1.5
   attackAnimDuration: 0.2
-  damage: 20
+  damage: 15
   maxHealth: 100
   currentHealth: 0
   isStunned: 0

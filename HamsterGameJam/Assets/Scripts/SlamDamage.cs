@@ -5,11 +5,12 @@ public class SlamDamage : MonoBehaviour
     public float minImpactForce = 5f;
     public float damage = 25f;
     public float selfDamage = 50f;
-    public float stunDuration = 2f;  // How long the enemy is stunned
+    public float stunDuration = 2f;
     public float maxHealth = 100f;
     public float currentHealth;
     public GameObject breakParticle;
     public GameObject hitParticle;
+
     [Header("Sounds")]
     private AudioSource audioSource;
     public AudioClip breakSound;
@@ -27,8 +28,8 @@ public class SlamDamage : MonoBehaviour
         {
             if (collision.gameObject.TryGetComponent(out EnemyAI enemy))
             {
-                enemy.TakeDamage(damage);  // Deal damage to the enemy
-                enemy.Stun(stunDuration);  // Stun the enemy for the specified duration
+                enemy.TakeDamage(damage);
+                enemy.Stun(stunDuration);
                 currentHealth -= selfDamage;
                 Debug.Log("Enemy slammed and stunned!");
 
@@ -37,6 +38,12 @@ public class SlamDamage : MonoBehaviour
                     ContactPoint contact = collision.contacts[0];
                     GameObject effect = Instantiate(breakParticle, contact.point, Quaternion.identity);
                     Destroy(effect, 2f);
+                }
+
+                // 👇 Camera Shake on Slam
+                if (CameraShake.Instance != null)
+                {
+                    CameraShake.Instance.Shake(0.3f, 0.2f); // Customize duration and magnitude
                 }
             }
 

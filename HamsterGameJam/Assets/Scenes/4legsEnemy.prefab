@@ -255,20 +255,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRange: 20
   attackRange: 2
-  moveSpeed: 12
+  moveSpeed: 10
   acceleration: 16
   angularSpeed: 720
   stoppingDistance: 1.5
   attackCooldown: 1.5
   attackAnimDuration: 0.2
   damage: 10
-  maxHealth: 100
+  maxHealth: 50
   currentHealth: 0
   isStunned: 0
   chaseSound: {fileID: 8300000, guid: 727a694c0924ac9458ceb544dee9d811, type: 3}
   deathSound: {fileID: 8300000, guid: 5d183be29f48e874e9432972c3659378, type: 3}
   deathParticle: {fileID: 1834194341294532, guid: d5f26854a8904624c8073139cd2eb346, type: 3}
-  strafeDistance: 6
+  strafeDistance: 3
   directionChangeInterval: 1
 --- !u!82 &2730112758354343382
 AudioSource:
