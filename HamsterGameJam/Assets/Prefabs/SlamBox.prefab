@@ -124,10 +124,11 @@ MonoBehaviour:
   minImpactForce: 15
   damage: 25
   selfDamage: 50
-  stunDuration: 2
+  stunDuration: 1
   maxHealth: 100
   currentHealth: 0
   breakParticle: {fileID: 6207022089048798115, guid: 6ce1a8d69fc1b26499d49f0a22034df9, type: 3}
+  hitParticle: {fileID: 1834194341294532, guid: d5f26854a8904624c8073139cd2eb346, type: 3}
   breakSound: {fileID: 8300000, guid: 65e5827ef2693274a9a8cded4f1bc17e, type: 3}
   impactSound: {fileID: 8300000, guid: 448b53b16ee91dd48a8dfc1773446e8a, type: 3}
 --- !u!82 &6739193114833391624

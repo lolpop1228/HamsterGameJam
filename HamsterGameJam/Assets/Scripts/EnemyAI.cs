@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     public float angularSpeed = 720f;
     public float stoppingDistance = 1.5f;
     public float attackCooldown = 1.5f;
+    public float attackAnimDuration = 1.2f;
     public int damage = 10;
 
     [Header("Health")]
@@ -23,7 +24,11 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Audio")]
     public AudioClip chaseSound;
+    public AudioClip deathSound;
     private AudioSource audioSource;
+
+    [Header("Effects")]
+    public GameObject deathParticle;
 
     [Header("Unpredictable Movement")]
     public float strafeDistance = 2f;
@@ -33,13 +38,17 @@ public class EnemyAI : MonoBehaviour
 
     private Transform player;
     private NavMeshAgent agent;
+    private Animator animator;
     private float lastAttackTime;
     private bool isDead = false;
+    private string currentAnimation = "";
+    private bool isAttacking = false;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
 
         if (agent)
@@ -60,6 +69,8 @@ public class EnemyAI : MonoBehaviour
         audioSource.clip = chaseSound;
         audioSource.loop = true;
         audioSource.playOnAwake = false;
+
+        PlayAnimation("Idle");
     }
 
     void Update()
@@ -70,7 +81,7 @@ public class EnemyAI : MonoBehaviour
         {
             HandleStun();
         }
-        else
+        else if (!isAttacking)
         {
             HandleMovement();
         }
@@ -85,11 +96,14 @@ public class EnemyAI : MonoBehaviour
 
         if (agent != null) agent.isStopped = true;
 
+        PlayAnimation("Stunt");
+
         stunTimer -= Time.deltaTime;
         if (stunTimer <= 0f)
         {
             isStunned = false;
             if (agent != null) agent.isStopped = false;
+            PlayAnimation("Idle");
         }
     }
 
@@ -104,7 +118,9 @@ public class EnemyAI : MonoBehaviour
                 audioSource.Play();
             }
 
-            // Change strafe direction at intervals
+            if (currentAnimation != "Chase")
+                PlayAnimation("Chase");
+
             if (Time.time >= nextDirectionChangeTime)
             {
                 Vector3 right = Vector3.Cross(Vector3.up, (player.position - transform.position).normalized);
@@ -121,7 +137,7 @@ public class EnemyAI : MonoBehaviour
 
                 if (Time.time >= lastAttackTime + attackCooldown)
                 {
-                    AttackPlayer();
+                    StartCoroutine(PerformAttack());
                     lastAttackTime = Time.time;
                 }
             }
@@ -137,34 +153,51 @@ public class EnemyAI : MonoBehaviour
             {
                 agent.ResetPath();
             }
+
+            if (currentAnimation != "Idle")
+                PlayAnimation("Idle");
         }
     }
 
-    public void Stun(float duration)
+    System.Collections.IEnumerator PerformAttack()
     {
-        if (isDead) return;
+        isAttacking = true;
 
-        isStunned = true;
-        stunTimer = duration;
         if (agent != null)
         {
-            agent.isStopped = true;
             agent.ResetPath();
+            agent.isStopped = true;
         }
 
-        if (audioSource.isPlaying)
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        directionToPlayer.y = 0f;
+        Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+        float elapsed = 0f;
+        float rotateDuration = 0.2f;
+
+        while (elapsed < rotateDuration)
         {
-            audioSource.Stop();
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, elapsed / rotateDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
         }
-    }
 
-    void AttackPlayer()
-    {
-        if (isDead) return;
+        transform.rotation = lookRotation;
+
+        PlayAnimation("Attack");
 
         if (player.TryGetComponent(out PlayerHealth playerHealth))
         {
             playerHealth.TakeDamage(damage);
+        }
+
+        yield return new WaitForSeconds(attackAnimDuration);
+
+        isAttacking = false;
+
+        if (agent != null && !isDead && !isStunned)
+        {
+            agent.isStopped = false;
         }
     }
 
@@ -178,6 +211,27 @@ public class EnemyAI : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void Stun(float duration)
+    {
+        if (isDead) return;
+
+        isStunned = true;
+        stunTimer = duration;
+
+        if (agent != null)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
+
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
+        PlayAnimation("Stunt");
     }
 
     void Die()
@@ -195,10 +249,34 @@ public class EnemyAI : MonoBehaviour
             audioSource.Stop();
         }
 
+        // Play death sound
+        if (deathSound != null)
+        {
+            AudioSource.PlayClipAtPoint(deathSound, transform.position, 5f);
+        }
+
+        // Spawn death particle
+        if (deathParticle != null)
+        {
+            GameObject effect = Instantiate(deathParticle, transform.position, Quaternion.identity);
+            Destroy(effect, 2f);
+        }
+
         Collider col = GetComponent<Collider>();
         if (col) col.enabled = false;
 
-        Destroy(gameObject, 0.5f);
+        PlayAnimation("Idle");
+
+        Destroy(gameObject);
+    }
+
+    void PlayAnimation(string animationName)
+    {
+        if (animator && currentAnimation != animationName)
+        {
+            animator.Play(animationName);
+            currentAnimation = animationName;
+        }
     }
 
     void OnDrawGizmosSelected()

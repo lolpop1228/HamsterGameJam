@@ -35,10 +35,21 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
+        // Shake the camera
+        if (CameraShake.Instance != null)
+        {
+            CameraShake.Instance.Shake(0.2f, 0.1f); // duration, magnitude
+        }
+
         if (currentHealth <= 0f)
         {
             Die();
         }
+    }
+        public void Heal(float amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
     }
 
     void Die()

@@ -9,6 +9,7 @@ public class SlamDamage : MonoBehaviour
     public float maxHealth = 100f;
     public float currentHealth;
     public GameObject breakParticle;
+    public GameObject hitParticle;
     [Header("Sounds")]
     private AudioSource audioSource;
     public AudioClip breakSound;
@@ -30,6 +31,13 @@ public class SlamDamage : MonoBehaviour
                 enemy.Stun(stunDuration);  // Stun the enemy for the specified duration
                 currentHealth -= selfDamage;
                 Debug.Log("Enemy slammed and stunned!");
+
+                if (hitParticle != null)
+                {
+                    ContactPoint contact = collision.contacts[0];
+                    GameObject effect = Instantiate(breakParticle, contact.point, Quaternion.identity);
+                    Destroy(effect, 2f);
+                }
             }
 
             if (impactSound != null)
