@@ -10,6 +10,8 @@ public class Dialogue : MonoBehaviour
     public float textSpeed;
     public float lineDelay = 1.5f;
     public PlayerMovement playerMovement;
+    public GameObject oldDialogue;
+    public GameObject newDialogue;
     public AudioSource audioSource;
     public AudioClip typingSound;
 
@@ -61,6 +63,14 @@ public class Dialogue : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+
+            if (oldDialogue != null) {
+                oldDialogue.SetActive(false);
+            }
+            
+            if (newDialogue != null) {
+                newDialogue.SetActive(true);
+            }
         }
     }
 
