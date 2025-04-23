@@ -18046,7 +18046,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1886355429}
   lines:
-  - '"A button, I can''t directly press it though"'
+  - '"A button, I can''t directly press it though."'
   textSpeed: 0.05
   lineDelay: 2.5
   playerMovement: {fileID: 0}
