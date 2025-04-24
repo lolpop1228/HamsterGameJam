@@ -26,8 +26,8 @@ public class PickUpFlashLight : MonoBehaviour, IInteractable
             flashLightObj.SetActive(false);
             playerFlashlight.SetActive(true);
             flashLightUI.SetActive(true);
+            StartCoroutine(TutorialUI());
         }
-        StartCoroutine(TutorialUI());
     }
 
     IEnumerator TutorialUI()
