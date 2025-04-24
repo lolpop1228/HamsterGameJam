@@ -1565,7 +1565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e635c075795b23478d391f9cbe9aa75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToPlay: House
+  sceneToPlay: StartTitle
   controlsUI: {fileID: 1281328555}
 --- !u!1 &1273600861
 GameObject:

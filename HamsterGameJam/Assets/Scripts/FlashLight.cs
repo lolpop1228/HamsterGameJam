@@ -11,6 +11,8 @@ public class FlashLightWithBattery : MonoBehaviour
     public float maxBattery = 100f;
     public float batteryDrainRate = 10f;     // Battery drain per second when on
     public float batteryRegenRate = 5f;      // Battery regen per second when off
+    private AudioSource audioSource;
+    public AudioClip openSound;
 
     private float currentBattery;
     private bool isOn = false;
@@ -28,6 +30,7 @@ public class FlashLightWithBattery : MonoBehaviour
         {
             isOn = !isOn;
             flashLight.SetActive(isOn);
+            audioSource.PlayOneShot(openSound);
         }
 
         if (isOn)
@@ -39,6 +42,7 @@ public class FlashLightWithBattery : MonoBehaviour
             {
                 isOn = false;
                 flashLight.SetActive(false);
+                audioSource.PlayOneShot(openSound);
             }
         }
         else if (currentBattery < maxBattery)
