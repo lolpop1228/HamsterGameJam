@@ -391,7 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRange: 20
   attackRange: 1.5
-  moveSpeed: 4
+  moveSpeed: 5
   acceleration: 16
   angularSpeed: 720
   stoppingDistance: 1.5
@@ -404,7 +404,7 @@ MonoBehaviour:
   chaseSound: {fileID: 8300000, guid: d934380e9459983479f2bd397952a8f3, type: 3}
   deathSound: {fileID: 8300000, guid: 5d183be29f48e874e9432972c3659378, type: 3}
   deathParticle: {fileID: 1834194341294532, guid: d5f26854a8904624c8073139cd2eb346, type: 3}
-  strafeDistance: 1.5
+  strafeDistance: 2
   directionChangeInterval: 1
 --- !u!65 &6355475177186071536
 BoxCollider:
