@@ -20,6 +20,7 @@ public class FlashLightWithBattery : MonoBehaviour
     void Start()
     {
         currentBattery = maxBattery;
+        audioSource = GetComponent<AudioSource>();
         flashLight.SetActive(false);
         UpdateBatteryUI();
     }
