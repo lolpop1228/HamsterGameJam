@@ -1,23 +1,18 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 
 public class OpenDoor : MonoBehaviour, IInteractable
 {
-    private AudioSource audioSource;
-    public AudioClip openSound;
-
-    void Start() {
-        audioSource = GetComponent<AudioSource>();
-    }
+    public GameObject uiPanel;
+    private bool hasTriggered = false;
 
     public void Interact() {
-        StartCoroutine(PlaySoundAndLoadScene());
-    }
-
-    private IEnumerator PlaySoundAndLoadScene() {
-        audioSource.PlayOneShot(openSound);
-        yield return new WaitForSeconds(openSound.length);
-        SceneManager.LoadScene("Level1");
+        
+        if (!hasTriggered) {
+            uiPanel.SetActive(true);
+        }
+        
+        hasTriggered = true;
     }
 }

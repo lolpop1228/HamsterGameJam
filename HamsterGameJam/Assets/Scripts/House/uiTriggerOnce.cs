@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 using System.Collections;
 
 public class uiTriggerOnce : MonoBehaviour
@@ -8,6 +9,7 @@ public class uiTriggerOnce : MonoBehaviour
     private Transform player;
     private AudioSource audioSource;
     public AudioClip soundEffect;
+    public PlayableDirector playableDirector;
     private bool hasTriggered = false;
 
     void Start()
@@ -30,5 +32,10 @@ public class uiTriggerOnce : MonoBehaviour
         audioSource.PlayOneShot(soundEffect);
         yield return new WaitForSeconds(soundEffect.length);
         uiPanel.SetActive(true);
+
+        if (playableDirector != null)
+        {
+            playableDirector.Play();
+        }
     }
 }
