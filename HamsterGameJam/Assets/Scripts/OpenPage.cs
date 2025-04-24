@@ -8,6 +8,7 @@ public class OpenPage : MonoBehaviour, IInteractable
     private AudioSource audioSource;
     public AudioClip flipSound;
     private bool isOpen = false;
+    private bool hasScored = false; // Track if score was already given
 
     void Start()
     {
@@ -34,6 +35,12 @@ public class OpenPage : MonoBehaviour, IInteractable
             if (flipSound != null && audioSource != null)
             {
                 audioSource.PlayOneShot(flipSound);
+            }
+
+            if (!hasScored)
+            {
+                ScoreManager.Instance.AddScore(1); // Call your scoring method
+                hasScored = true;
             }
         }
     }
